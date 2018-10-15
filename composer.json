@@ -1,0 +1,53 @@
+{
+    "name": "jstoone/nova-mailman",
+    "description": "Conveniently route all emails to a local mailbox.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "homepage": "https://github.com/jstoone/nova-mailman",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakob Steinn",
+            "email": "jstoone@drk.sh",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "laravel/nova": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.6",
+        "phpunit/phpunit": "7.1"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jstoone\\Mailman\\MailmanServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Jstoone\\Mailman\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jstoone\\Mailman\\Tests\\": "tests"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../nova"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
