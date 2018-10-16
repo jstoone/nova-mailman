@@ -1,6 +1,8 @@
 <?php
 
-namespace Jstoone\Mailman\Tests;
+namespace Jstoone\Mailman\Tests\Http\Controllers;
+
+use Jstoone\Mailman\Tests\TestCase;
 
 class ToolControllerTest extends TestCase
 {
