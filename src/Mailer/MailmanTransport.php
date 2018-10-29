@@ -32,9 +32,16 @@ class MailmanTransport extends Transport
 
         $this->createMailbox();
 
+        // Create html file
         $this->files->put(
-            $this->mailboxPath . '/' . $this->getMailPath($message) . '.html',
+            $this->getMailPath($message) . '.html',
             $this->getMailContent($message)
+        );
+
+        // Create json file
+        $this->files->put(
+            $this->getMailPath($message) . '.json',
+            $this->getMailMetadata($message)
         );
     }
 
@@ -56,16 +63,7 @@ class MailmanTransport extends Transport
      */
     protected function getMailPath(Swift_Mime_SimpleMessage $message): string
     {
-        $time = $message->getDate()->getTimestamp();
-        $subject = $message->getSubject();
-        $recipient = array_first(array_keys($message->getTo()));
-        $recipient = str_replace('.', '-', $recipient);
-
-        return implode('_', [
-            $time,
-            str_slug($recipient),
-            str_slug($subject),
-        ]);
+        return $this->mailboxPath . '/' . time();
     }
 
     /**
@@ -74,5 +72,18 @@ class MailmanTransport extends Transport
     protected function getMailContent(Swift_Mime_SimpleMessage $message): string
     {
         return $message->getBody();
+    }
+
+    /**
+     * Get the metadata for the given mail message.
+     */
+    protected function getMailMetadata(Swift_Mime_SimpleMessage $message): string
+    {
+        return json_encode([
+            'recipient' => array_first(array_keys($message->getTo())),
+            'subject'   => $message->getSubject(),
+            'sent_at'   => time(),
+            'content'   => $this->getMailPath($message) . '.html',
+        ], JSON_PRETTY_PRINT);
     }
 }

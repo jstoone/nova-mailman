@@ -7,10 +7,23 @@ use Jstoone\Mailman\Tests\TestCase;
 class MailmanControllerTest extends TestCase
 {
     /** @test */
-    public function it_can_can_return_a_response()
+    public function it_returns_emails()
     {
-        $this
-            ->get('nova-vendor/jstoone/nova-mailman/endpoint')
-            ->assertSuccessful();
+        $this->withoutExceptionHandling();
+        $this->sendMail(
+            $subject = 'Mail Subject',
+            $recipient = 'john@example.com'
+        );
+
+        $response = $this->get('nova-vendor/jstoone/nova-mailman/mailman')
+            ->assertSuccessful()
+            ->assertJson([
+                [
+                    'recipient' => $recipient,
+                    'subject'   => $subject,
+                    'sent_at'   => time(),
+                    'content'   => asset('mailman/' . time() . '.html'),
+                ],
+            ]);
     }
 }
