@@ -3,7 +3,6 @@ namespace Jstoone\Mailman\Mailer;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Mail\Transport\Transport;
-use Swift_Message;
 use Swift_Mime_SimpleMessage;
 
 class MailmanTransport extends Transport
@@ -78,7 +77,7 @@ class MailmanTransport extends Transport
     /**
      * Get the metadata for the given mail message.
      */
-    protected function getMailMetadata(Swift_Message $message): string
+    protected function getMailMetadata(Swift_Mime_SimpleMessage $message): string
     {
         return json_encode([
             'recipient' => array_first(array_keys($message->getTo())),
