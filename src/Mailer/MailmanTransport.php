@@ -3,6 +3,7 @@ namespace Jstoone\Mailman\Mailer;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Mail\Transport\Transport;
+use Swift_Message;
 use Swift_Mime_SimpleMessage;
 
 class MailmanTransport extends Transport
@@ -32,9 +33,16 @@ class MailmanTransport extends Transport
 
         $this->createMailbox();
 
+        // Create html file
         $this->files->put(
             $this->mailboxPath . '/' . $this->getMailPath($message) . '.html',
             $this->getMailContent($message)
+        );
+
+        // Create json file
+        $this->files->put(
+            $this->mailboxPath . '/' . $this->getMailPath($message) . '.json',
+            $this->getMailMetadata($message)
         );
     }
 
@@ -65,5 +73,18 @@ class MailmanTransport extends Transport
     protected function getMailContent(Swift_Mime_SimpleMessage $message): string
     {
         return $message->getBody();
+    }
+
+    /**
+     * Get the metadata for the given mail message.
+     */
+    protected function getMailMetadata(Swift_Message $message): string
+    {
+        return json_encode([
+            'recipient' => array_first(array_keys($message->getTo())),
+            'subject'   => $message->getSubject(),
+            'sent_at'   => time(),
+            'content'   => $this->mailboxPath . '/' . $this->getMailPath($message) . '.html',
+        ], JSON_PRETTY_PRINT);
     }
 }

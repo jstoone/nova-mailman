@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('endpoint', \Jstoone\Mailman\Http\Controllers\MailmanController::class . '@index');
+Route::resource('mailman', \Jstoone\Mailman\Http\Controllers\MailmanController::class)->only(['index']);

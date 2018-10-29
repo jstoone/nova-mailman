@@ -31,9 +31,26 @@ class MailmanTransportTest extends TestCase
 
         $file = app(Filesystem::class)->get('mailman/' . time() . '.html');
 
-        $expected = time() . '_john-at-example-com_mail-subject.html';
-        $this->assertTrue(
-            app(Filesystem::class)->exists('mailman/' . $expected)
+        $this->assertEquals('Mail Body', $file);
+    }
+
+    /** @test */
+    public function it_stores_email_metadata_in_a_json_file()
+    {
+        $message = $this->sendMail('Mail Subject', 'john@example.com');
+
+        $file = app(Filesystem::class)->get(
+            $path = 'mailman/' . time() . '.json'
+        );
+
+        $this->assertEquals(
+            [
+                'recipient' => 'john@example.com',
+                'subject'   => $message->getSubject(),
+                'sent_at'   => time(),
+                'content'   => 'mailman/' . time() . '.html',
+            ],
+            json_decode($file, true)
         );
     }
 }
