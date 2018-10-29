@@ -27,11 +27,9 @@ class MailmanTransportTest extends TestCase
     /** @test */
     public function it_stores_emails_as_html_files()
     {
-        $message = new Swift_Message('Mail Subject', 'Mail Body');
-        $message->setTo('john@example.com');
+        $message = $this->sendMail('Mail Subject', 'john@example.com');
 
-        $transport = $this->app->make(MailmanTransport::class);
-        $transport->send($message);
+        $file = app(Filesystem::class)->get('mailman/' . time() . '.html');
 
         $expected = time() . '_john-at-example-com_mail-subject.html';
         $this->assertTrue(

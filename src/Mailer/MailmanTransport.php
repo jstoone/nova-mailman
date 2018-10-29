@@ -56,16 +56,7 @@ class MailmanTransport extends Transport
      */
     protected function getMailPath(Swift_Mime_SimpleMessage $message): string
     {
-        $time = $message->getDate()->getTimestamp();
-        $subject = $message->getSubject();
-        $recipient = array_first(array_keys($message->getTo()));
-        $recipient = str_replace('.', '-', $recipient);
-
-        return implode('_', [
-            $time,
-            str_slug($recipient),
-            str_slug($subject),
-        ]);
+        return $message->getDate()->getTimestamp();
     }
 
     /**
