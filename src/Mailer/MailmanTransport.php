@@ -34,13 +34,13 @@ class MailmanTransport extends Transport
 
         // Create html file
         $this->files->put(
-            $this->mailboxPath . '/' . $this->getMailPath($message) . '.html',
+            $this->getMailPath($message) . '.html',
             $this->getMailContent($message)
         );
 
         // Create json file
         $this->files->put(
-            $this->mailboxPath . '/' . $this->getMailPath($message) . '.json',
+            $this->getMailPath($message) . '.json',
             $this->getMailMetadata($message)
         );
     }
@@ -63,7 +63,7 @@ class MailmanTransport extends Transport
      */
     protected function getMailPath(Swift_Mime_SimpleMessage $message): string
     {
-        return $message->getDate()->getTimestamp();
+        return $this->mailboxPath . '/' . time();
     }
 
     /**
@@ -83,7 +83,7 @@ class MailmanTransport extends Transport
             'recipient' => array_first(array_keys($message->getTo())),
             'subject'   => $message->getSubject(),
             'sent_at'   => time(),
-            'content'   => $this->mailboxPath . '/' . $this->getMailPath($message) . '.html',
+            'content'   => $this->getMailPath($message) . '.html',
         ], JSON_PRETTY_PRINT);
     }
 }
