@@ -2,6 +2,7 @@
 
 namespace Jstoone\Mailman\Tests\Http\Controllers;
 
+use Jstoone\Mailman\GenerateMailIdentifier;
 use Jstoone\Mailman\Tests\TestCase;
 
 class MailmanControllerTest extends TestCase
@@ -11,7 +12,10 @@ class MailmanControllerTest extends TestCase
     /** @test */
     public function it_returns_emails()
     {
-        $this->withoutExceptionHandling();
+        $this->app->instance(GenerateMailIdentifier::class, function () {
+            return 'unique-mail-identifier';
+        });
+
         $this->sendMail(
             $subject = 'Mail Subject',
             $recipient = 'john@example.com'
@@ -21,10 +25,10 @@ class MailmanControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJson([
                 [
-                    'recipient' => $recipient,
-                    'subject'   => $subject,
-                    'sent_at'   => time(),
-                    'content'   => asset('mailman/' . time() . '.html'),
+                    'identifier' => 'unique-mail-identifier',
+                    'recipient'  => $recipient,
+                    'subject'    => $subject,
+                    'sent_at'    => time(),
                 ],
             ]);
     }

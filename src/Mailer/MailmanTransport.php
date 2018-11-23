@@ -17,10 +17,29 @@ class MailmanTransport extends Transport
      */
     protected $mailboxPath;
 
+    /**
+     * @var string
+     */
+    protected $identifier;
+
     public function __construct(Filesystem $files)
     {
         $this->files = $files;
         $this->mailboxPath = 'mailman';
+    }
+
+    /**
+     * Iterate through registered plugins and execute plugins' methods.
+     *
+     * @param Swift_Mime_SimpleMessage $message
+     *
+     * @return void
+     */
+    protected function beforeSendPerformed(Swift_Mime_SimpleMessage $message)
+    {
+        parent::beforeSendPerformed($message);
+
+        $this->identifier = MailIdentifier::generate();
     }
 
     /**
@@ -63,7 +82,7 @@ class MailmanTransport extends Transport
      */
     protected function getMailPath(Swift_Mime_SimpleMessage $message): string
     {
-        return $this->mailboxPath . '/' . time();
+        return $this->mailboxPath . '/' . $this->identifier;
     }
 
     /**
@@ -80,11 +99,10 @@ class MailmanTransport extends Transport
     protected function getMailMetadata(Swift_Mime_SimpleMessage $message): string
     {
         return json_encode([
-            'recipient' => array_first(array_keys($message->getTo())),
-            'subject'   => $message->getSubject(),
-            'sent_at'   => time(),
-            'content'   => $this->getMailPath($message) . '.html',
-            'id'        => MailIdentifier::generate(),
+            'identifier' => MailIdentifier::generate(),
+            'recipient'  => array_first(array_keys($message->getTo())),
+            'subject'    => $message->getSubject(),
+            'sent_at'    => time(),
         ], JSON_PRETTY_PRINT);
     }
 }

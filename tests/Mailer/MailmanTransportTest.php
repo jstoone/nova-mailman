@@ -28,9 +28,13 @@ class MailmanTransportTest extends TestCase
     /** @test */
     public function it_stores_emails_as_html_files()
     {
+        $this->app->instance(GenerateMailIdentifier::class, function () {
+            return 'unique-identifier';
+        });
+
         $message = $this->sendMail('Mail Subject', 'john@example.com');
 
-        $file = app(Filesystem::class)->get('mailman/' . time() . '.html');
+        $file = app(Filesystem::class)->get('mailman/unique-identifier.html');
 
         $this->assertEquals('Mail Body', $file);
     }
@@ -43,17 +47,14 @@ class MailmanTransportTest extends TestCase
         });
 
         $message = $this->sendMail('Mail Subject', 'john@example.com');
-        $file = app(Filesystem::class)->get(
-            $path = 'mailman/' . time() . '.json'
-        );
+        $file = app(Filesystem::class)->get('mailman/unique-identifier.json');
 
         $this->assertEquals(
             [
-                'recipient' => 'john@example.com',
-                'subject'   => $message->getSubject(),
-                'sent_at'   => time(),
-                'content'   => 'mailman/' . time() . '.html',
-                'id'        => 'unique-identifier',
+                'identifier' => 'unique-identifier',
+                'recipient'  => 'john@example.com',
+                'subject'    => $message->getSubject(),
+                'sent_at'    => time(),
             ],
             json_decode($file, true)
         );
