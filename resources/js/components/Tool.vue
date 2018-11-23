@@ -52,15 +52,15 @@
             ]
         }),
 
-        async created() {
-            await this.getMessages();
+        created() {
+            this.getMessages();
 
             this.loaded = true;
         },
 
         methods: {
             getMessages() {
-                Nova.request().get('/nova-vendor/jstoone/nova-mailman/mailman')
+                Nova.request().get('/nova-vendor/jstoone/nova-mailman/mail')
                     .then(response => {
                         this.messages = response.data;
                     });

@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('mailman', \Jstoone\Mailman\Http\Controllers\MailmanController::class)->only(['index']);
+Route::resource('mail', \Jstoone\Mailman\Http\Controllers\MailmanController::class)->only(['index']);
