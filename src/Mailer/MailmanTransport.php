@@ -84,6 +84,7 @@ class MailmanTransport extends Transport
             'subject'   => $message->getSubject(),
             'sent_at'   => time(),
             'content'   => $this->getMailPath($message) . '.html',
+            'id'        => MailIdentifier::generate(),
         ], JSON_PRETTY_PRINT);
     }
 }

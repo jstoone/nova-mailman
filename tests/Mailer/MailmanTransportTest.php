@@ -3,6 +3,7 @@
 namespace Jstoone\Mailman\Tests\Mailer;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Jstoone\Mailman\GenerateMailIdentifier;
 use Jstoone\Mailman\Mailer\MailmanTransport;
 use Jstoone\Mailman\Tests\TestCase;
 use Swift_Message;
@@ -37,8 +38,11 @@ class MailmanTransportTest extends TestCase
     /** @test */
     public function it_stores_email_metadata_in_a_json_file()
     {
-        $message = $this->sendMail('Mail Subject', 'john@example.com');
+        $this->app->instance(GenerateMailIdentifier::class, function () {
+            return 'unique-identifier';
+        });
 
+        $message = $this->sendMail('Mail Subject', 'john@example.com');
         $file = app(Filesystem::class)->get(
             $path = 'mailman/' . time() . '.json'
         );
@@ -49,6 +53,7 @@ class MailmanTransportTest extends TestCase
                 'subject'   => $message->getSubject(),
                 'sent_at'   => time(),
                 'content'   => 'mailman/' . time() . '.html',
+                'id'        => 'unique-identifier',
             ],
             json_decode($file, true)
         );
