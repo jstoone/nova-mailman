@@ -11,9 +11,12 @@ class MailmanController extends Controller
 {
     public function index(Filesystem $filesystem)
     {
-        $path = $filesystem->path('mailman');
+        if (!$filesystem->exists('mailman')) {
+            return [];
+        }
 
-        $files = (new Finder)->in($path)
+        $files = (new Finder)
+            ->in($filesystem->path('mailman'))
             ->name('*.json')
             ->ignoreDotFiles(true)
             ->files();
