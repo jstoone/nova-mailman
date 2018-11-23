@@ -168,7 +168,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
 
 // exports
 
@@ -662,6 +662,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
@@ -673,20 +683,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             loaded: false,
             currentMessage: null,
             messages: [{
-                to: "john@example.com",
-                subject: "Foo subject",
-                timestamp: 1539733755,
-                content: 'http://nova-demo.test'
-            }, {
-                to: "jane@example.com",
-                subject: "Bar subject",
-                timestamp: 1539733200,
-                content: 'http://import.dev-cobiro.test'
-            }, {
-                to: "mailman@example.com",
-                subject: "OMG subject",
-                timestamp: 1529733755,
-                content: 'http://api.dev-cobiro.test'
+                content: 'http://nova-demo.test',
+                recipient: "john@example.com",
+                sent_at: 1539733755,
+                subject: "Foo subject"
             }]
         };
     },
@@ -697,6 +697,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
+                            _context.next = 2;
+                            return this.getMessages();
+
+                        case 2:
+
+                            this.loaded = true;
+
+                        case 3:
                         case "end":
                             return _context.stop();
                     }
@@ -714,22 +722,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
     methods: {
         getMessages: function getMessages() {
-            //
+            var _this = this;
+
+            Nova.request().get('/nova-vendor/jstoone/nova-mailman/mailman').then(function (response) {
+                _this.messages = response.data;
+            });
         },
         setCurrentMessage: function setCurrentMessage(message) {
             this.currentMessage = message;
         },
         formatTimestamp: function formatTimestamp(timestamp) {
             return window.moment.unix(timestamp).calendar();
-        },
-        startPolling: function startPolling() {
-            var poller = window.setInterval(function () {
-                //
-            }, 1000);
-
-            this.$once('hook:beforeDestroy', function () {
-                window.clearInterval(poller);
-            });
         }
     }
 });
@@ -1523,78 +1526,96 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("heading", { staticClass: "mb-6" }, [_vm._v("Mailman")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "flex" },
-        [
-          _c(
-            "card",
-            { staticClass: "w-1/3 mr-2" },
-            _vm._l(_vm.messages, function(message) {
-              return _c(
-                "div",
-                {
-                  key: message.timestamp,
-                  staticClass: "border-b border-primary-10% cursor-pointer",
-                  attrs: { role: "alert" }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-4 border-l-2 border-transparent hover:border-primary",
-                      on: {
-                        click: function($event) {
-                          _vm.setCurrentMessage(message)
-                        }
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "flex justify-between ml-auto" },
+      [
+        _c("heading", { staticClass: "mb-6" }, [_vm._v("Mailman")]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default btn-primary text-center",
+            attrs: { dusk: "cancel-action-button", type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.getMessages($event)
+              }
+            }
+          },
+          [_vm._v("\n            " + _vm._s(_vm.__("Refresh")) + "\n        ")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "flex" },
+      [
+        _c(
+          "card",
+          { staticClass: "w-1/3 mr-2" },
+          _vm._l(_vm.messages, function(message) {
+            return _c(
+              "div",
+              {
+                key: message.timestamp,
+                staticClass: "border-b border-primary-10% cursor-pointer",
+                attrs: { role: "alert" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "p-4 border-l-2 border-transparent hover:border-primary",
+                    on: {
+                      click: function($event) {
+                        _vm.setCurrentMessage(message)
                       }
-                    },
-                    [
-                      _c("p", { staticClass: "flex justify-between" }, [
-                        _c("span", { staticClass: "font-bold" }, [
-                          _vm._v(_vm._s(message.subject))
-                        ]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "text-80 text-sm" }, [
-                          _vm._v(_vm._s(_vm.formatTimestamp(message.timestamp)))
-                        ])
+                    }
+                  },
+                  [
+                    _c("p", { staticClass: "flex justify-between" }, [
+                      _c("span", { staticClass: "font-bold" }, [
+                        _vm._v(_vm._s(message.subject))
                       ]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(message.to))])
-                    ]
-                  )
-                ]
-              )
-            })
-          ),
-          _vm._v(" "),
-          _c(
-            "card",
-            { staticClass: "w-2/3", staticStyle: { height: "650px" } },
-            [
-              _vm.currentMessage
-                ? _c("iframe", {
-                    staticClass: "w-full h-full",
-                    attrs: { src: _vm.currentMessage.content }
-                  })
-                : _c("heading", { staticClass: "mt-6 text-center" }, [
-                    _vm._v("Select an email")
-                  ])
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                      _c("span", { staticClass: "text-80 text-sm" }, [
+                        _vm._v(_vm._s(_vm.formatTimestamp(message.sent_at)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(message.recipient))])
+                  ]
+                )
+              ]
+            )
+          })
+        ),
+        _vm._v(" "),
+        _c(
+          "card",
+          { staticClass: "w-2/3", staticStyle: { height: "650px" } },
+          [
+            _vm.currentMessage
+              ? _c("iframe", {
+                  staticClass: "w-full h-full",
+                  attrs: { src: _vm.currentMessage.content }
+                })
+              : _c("heading", { staticClass: "mt-6 text-center" }, [
+                  _vm._v("Select an email")
+                ])
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

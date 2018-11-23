@@ -26,4 +26,12 @@ class MailmanControllerTest extends TestCase
                 ],
             ]);
     }
+
+    /** @test */
+    public function it_gives_empty_response_upon_missing_directory(): void
+    {
+        $response = $this->get('nova-vendor/jstoone/nova-mailman/mailman')
+            ->assertSuccessful()
+            ->assertJson([]);
+    }
 }

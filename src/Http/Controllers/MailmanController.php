@@ -28,6 +28,6 @@ class MailmanController extends Controller
                     'sent_at'   => $file->sent_at,
                     'content'   => asset($file->content),
                 ];
-            })->values();
+            })->sortBy('sent_at')->values();
     }
 }

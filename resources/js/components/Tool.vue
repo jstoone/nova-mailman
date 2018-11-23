@@ -1,6 +1,16 @@
 <template>
     <div>
-        <heading class="mb-6">Mailman</heading>
+        <div class="flex justify-between ml-auto">
+            <heading class="mb-6">Mailman</heading>
+            <button
+                dusk="cancel-action-button"
+                type="button"
+                @click.prevent="getMessages"
+                class="btn btn-default btn-primary text-center"
+            >
+                {{__('Refresh')}}
+            </button>
+        </div>
 
         <div class="flex">
             <card class="w-1/3 mr-2">
@@ -8,9 +18,9 @@
                     <div class="p-4 border-l-2 border-transparent hover:border-primary" @click="setCurrentMessage(message)">
                         <p class="flex justify-between">
                             <span class="font-bold">{{ message.subject }}</span>
-                            <span class="text-80 text-sm">{{ formatTimestamp(message.timestamp) }}</span>
+                            <span class="text-80 text-sm">{{ formatTimestamp(message.sent_at) }}</span>
                         </p>
-                        <p>{{ message.to }}</p>
+                        <p>{{ message.recipient }}</p>
                     </div>
                 </div>
             </card>
@@ -34,37 +44,26 @@
             currentMessage: null,
             messages: [
                 {
-                    to: "john@example.com",
-                    subject: "Foo subject",
-                    timestamp: 1539733755,
-                    content: 'http://nova-demo.test'
-                },
-                {
-                    to: "jane@example.com",
-                    subject: "Bar subject",
-                    timestamp: 1539733200,
-                    content: 'http://import.dev-cobiro.test'
-                },
-                {
-                    to: "mailman@example.com",
-                    subject: "OMG subject",
-                    timestamp: 1529733755,
-                    content: 'http://api.dev-cobiro.test'
+                    content: 'http://nova-demo.test',
+                    recipient: "john@example.com",
+                    sent_at: 1539733755,
+                    subject: "Foo subject"
                 },
             ]
         }),
 
         async created() {
-            // await this.getMessages();
+            await this.getMessages();
 
-            // this.loaded = true;
-
-            // this.startPolling();
+            this.loaded = true;
         },
 
         methods: {
             getMessages() {
-                //
+                Nova.request().get('/nova-vendor/jstoone/nova-mailman/mailman')
+                    .then(response => {
+                        this.messages = response.data;
+                    });
             },
 
             setCurrentMessage(message) {
@@ -74,16 +73,6 @@
             formatTimestamp(timestamp) {
                 return window.moment.unix(timestamp).calendar();
             },
-
-            startPolling() {
-                const poller = window.setInterval(() => {
-                    //
-                }, 1000);
-
-                this.$once('hook:beforeDestroy', () => {
-                    window.clearInterval(poller);
-                });
-            }
         }
     }
 </script>
