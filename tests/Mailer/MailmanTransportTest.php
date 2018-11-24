@@ -56,7 +56,7 @@ class MailmanTransportTest extends TestCase
                 'subject'   => $message->getSubject(),
                 'recipient' => 'john@example.com',
                 'sent_at'   => time(),
-                'link'      => route('mail.show', 'unique-identifier'),
+                'link'      => route('nova-mailman.show', 'unique-identifier'),
             ],
             json_decode($file, true)
         );

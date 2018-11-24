@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: Add prefix to route name
-Route::resource('mail', \Jstoone\Mailman\Http\Controllers\MailmanController::class)
-    ->only(['index', 'show']);
+Route::apiResource('mail', \Jstoone\Mailman\Http\Controllers\MailmanController::class)
+    ->only(['index', 'show'])
+    ->names([
+        'index' => 'nova-mailman.index',
+        'show'  => 'nova-mailman.show',
+    ]);

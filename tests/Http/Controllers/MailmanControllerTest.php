@@ -20,7 +20,7 @@ class MailmanControllerTest extends TestCase
         );
 
         $this->withoutExceptionHandling();
-        $response = $this->get(route('mail.index'))
+        $response = $this->get(route('nova-mailman.index'))
             ->assertSuccessful()
             ->assertJson([
                 [
@@ -28,7 +28,7 @@ class MailmanControllerTest extends TestCase
                     'recipient' => $recipient,
                     'subject'   => $subject,
                     'sent_at'   => time(),
-                    'link'      => route('mail.show', 'unique-mail-identifier'),
+                    'link'      => route('nova-mailman.show', 'unique-mail-identifier'),
                 ],
             ]);
     }
@@ -36,7 +36,7 @@ class MailmanControllerTest extends TestCase
     /** @test */
     public function it_gives_empty_response_upon_missing_directory()
     {
-        $this->get(route('mail.index'))
+        $this->get(route('nova-mailman.index'))
             ->assertSuccessful()
             ->assertJson([]);
     }
@@ -54,7 +54,7 @@ class MailmanControllerTest extends TestCase
             $recipient = 'john@example.com'
         );
 
-        $this->get(route('mail.show', 'unique-mail-identifier'))
+        $this->get(route('nova-mailman.show', 'unique-mail-identifier'))
             ->assertSuccessful()
             ->assertViewIs('nova-mailman-mails::unique-mail-identifier');
     }

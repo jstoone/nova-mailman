@@ -103,7 +103,7 @@ class MailmanTransport extends Transport
             'recipient' => array_first(array_keys($message->getTo())),
             'subject'   => $message->getSubject(),
             'sent_at'   => time(),
-            'link'      => route('mail.show', $this->identifier),
+            'link'      => route('nova-mailman.show', $this->identifier),
         ], JSON_PRETTY_PRINT);
     }
 }
