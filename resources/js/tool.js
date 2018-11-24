@@ -5,5 +5,5 @@ Nova.booting((Vue, router) => {
             path: '/nova-mailman',
             component: require('./components/Tool'),
         },
-    ])
-})
+    ]);
+});

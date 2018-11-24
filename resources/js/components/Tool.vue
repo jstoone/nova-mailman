@@ -34,49 +34,50 @@
 </template>
 
 <script>
-    export default {
-        components: {
-            // 
+export default {
+    components: {
+        //
+    },
+
+    data: () => ({
+        loaded: false,
+        currentMessage: null,
+        messages: [
+            {
+                content: 'http://nova-demo.test',
+                recipient: 'john@example.com',
+                sent_at: 1539733755,
+                subject: 'Foo subject',
+            },
+        ],
+    }),
+
+    created() {
+        this.getMessages();
+
+        this.loaded = true;
+    },
+
+    methods: {
+        getMessages() {
+            Nova.request()
+                .get('/nova-vendor/jstoone/nova-mailman/mail')
+                .then(response => {
+                    this.messages = response.data;
+                });
         },
 
-        data: () => ({
-            loaded: false,
-            currentMessage: null,
-            messages: [
-                {
-                    content: 'http://nova-demo.test',
-                    recipient: "john@example.com",
-                    sent_at: 1539733755,
-                    subject: "Foo subject"
-                },
-            ]
-        }),
-
-        created() {
-            this.getMessages();
-
-            this.loaded = true;
+        setCurrentMessage(message) {
+            this.currentMessage = message;
         },
 
-        methods: {
-            getMessages() {
-                Nova.request().get('/nova-vendor/jstoone/nova-mailman/mail')
-                    .then(response => {
-                        this.messages = response.data;
-                    });
-            },
-
-            setCurrentMessage(message) {
-                this.currentMessage = message;
-            },
-
-            formatTimestamp(timestamp) {
-                return window.moment.unix(timestamp).calendar();
-            },
-        }
-    }
+        formatTimestamp(timestamp) {
+            return window.moment.unix(timestamp).calendar();
+        },
+    },
+};
 </script>
 
 <style>
-    /* Scoped Styles */
+/* Scoped Styles */
 </style>
