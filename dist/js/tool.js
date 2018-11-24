@@ -95,7 +95,7 @@ var normalizeComponent = __webpack_require__(8)
 /* script */
 var __vue_script__ = __webpack_require__(9)
 /* template */
-var __vue_template__ = __webpack_require__(13)
+var __vue_template__ = __webpack_require__(10)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -710,10 +710,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -798,7 +795,7 @@ var render = function() {
             _vm.currentMessage
               ? _c("iframe", {
                   staticClass: "w-full h-full",
-                  attrs: { src: _vm.currentMessage.content }
+                  attrs: { src: _vm.currentMessage.link }
                 })
               : _c("heading", { staticClass: "mt-6 text-center" }, [
                   _vm._v("Select an email")

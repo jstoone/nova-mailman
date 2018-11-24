@@ -25,7 +25,7 @@
                 </div>
             </card>
             <card class="w-2/3" style="height: 650px;">
-                <iframe v-if="currentMessage" :src="currentMessage.content" class="w-full h-full">
+                <iframe v-if="currentMessage" :src="currentMessage.link" class="w-full h-full">
                 </iframe>
                 <heading v-else class="mt-6 text-center">Select an email</heading>
             </card>
