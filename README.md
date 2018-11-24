@@ -1,9 +1,8 @@
 # Conveniently route all emails to a local mailbox.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jstoone/nova-mailman.svg?style=flat-square)](https://packagist.org/packages/jstoone/nova-mailman)
-![CircleCI branch](https://img.shields.io/circleci/project/github/jstoone/nova-mailman/master.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/jstoone/nova-mailman/master.svg?style=flat-square)](https://travis-ci.org/jstoone/nova-mailman)
-[![Quality Score](https://img.shields.io/scrutinizer/g/jstoone/nova-mailman.svg?style=flat-square)](https://scrutinizer-ci.com/g/jstoone/nova-mailman)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f226c77c6734ba3ace718b87281536c)](https://www.codacy.com/app/jstoone/nova-mailman?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jstoone/nova-mailman&amp;utm_campaign=Badge_Grade)
 [![Total Downloads](https://img.shields.io/packagist/dt/jstoone/nova-mailman.svg?style=flat-square)](https://packagist.org/packages/jstoone/nova-mailman)
 
 When the `log`-driver doesn't cut it, and you can't be bothered looking for your [Mailtrap](https://mailtrap.io) credentials, Nova Mailman is ... your man.
