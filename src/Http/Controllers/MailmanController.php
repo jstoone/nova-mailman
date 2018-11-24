@@ -33,4 +33,9 @@ class MailmanController extends Controller
                 ];
             })->sortBy('sent_at')->values();
     }
+
+    public function show(Filesystem $filesystem, string $identifier)
+    {
+        return view("nova-mailman-mails::$identifier");
+    }
 }

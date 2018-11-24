@@ -34,16 +34,15 @@ abstract class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         Route::middlewareGroup('nova', []);
-
-        $app['config']->set('filesystems.disks.local', [
-            'driver' => 'local',
-            'root'   => __DIR__ . '/temp',
-        ]);
     }
 
     protected function getPackageProviders($app)
     {
         $app['config']->set('mail.driver', self::$mailDriver);
+        $app['config']->set('filesystems.disks.local', [
+            'driver' => 'local',
+            'root'   => __DIR__ . '/temp',
+        ]);
 
         return [
             MailmanServiceProvider::class,

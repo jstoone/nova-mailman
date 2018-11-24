@@ -34,7 +34,7 @@ class MailmanTransportTest extends TestCase
 
         $message = $this->sendMail('Mail Subject', 'john@example.com');
 
-        $file = app(Filesystem::class)->get('mailman/unique-identifier.html');
+        $file = app(Filesystem::class)->get('mailman/unique-identifier.blade.php');
 
         $this->assertEquals('Mail Body', $file);
     }

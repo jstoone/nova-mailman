@@ -3,6 +3,7 @@
 namespace Jstoone\Mailman;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Jstoone\Mailman\Http\Middleware\Authorize;
 use Jstoone\Mailman\Mailer\MailProvider;
@@ -18,7 +19,7 @@ class MailmanServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-mailman');
+        $this->views();
 
         $this->app->booted(function () {
             $this->routes();
@@ -26,6 +27,13 @@ class MailmanServiceProvider extends ServiceProvider
 
         Nova::serving(function (ServingNova $event) {
         });
+    }
+
+    protected function views()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-mailman');
+
+        $this->loadViewsFrom(Storage::path('mailman'), 'nova-mailman-mails');
     }
 
     /**

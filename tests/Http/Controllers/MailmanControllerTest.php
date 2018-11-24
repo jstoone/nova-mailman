@@ -7,8 +7,6 @@ use Jstoone\Mailman\Tests\TestCase;
 
 class MailmanControllerTest extends TestCase
 {
-    const MAIL_ROUTE = 'nova-vendor/jstoone/nova-mailman/mail';
-
     /** @test */
     public function it_returns_emails()
     {
@@ -21,7 +19,7 @@ class MailmanControllerTest extends TestCase
             $recipient = 'john@example.com'
         );
 
-        $response = $this->get(self::MAIL_ROUTE)
+        $response = $this->get(route('mail.index'))
             ->assertSuccessful()
             ->assertJson([
                 [
@@ -34,10 +32,28 @@ class MailmanControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_gives_empty_response_upon_missing_directory(): void
+    public function it_gives_empty_response_upon_missing_directory()
     {
-        $response = $this->get(self::MAIL_ROUTE)
+        $this->get(route('mail.index'))
             ->assertSuccessful()
             ->assertJson([]);
+    }
+
+    /** @test */
+    public function it_can_return_html_for_a_given_mail()
+    {
+        $this->withoutExceptionHandling();
+        $this->app->instance(GenerateMailIdentifier::class, function () {
+            return 'unique-mail-identifier';
+        });
+
+        $this->sendMail(
+            $subject = 'Mail Subject',
+            $recipient = 'john@example.com'
+        );
+
+        $this->get(route('mail.show', 'unique-mail-identifier'))
+            ->assertSuccessful()
+            ->assertViewIs('nova-mailman-mails::unique-mail-identifier');
     }
 }
