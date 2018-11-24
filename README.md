@@ -8,7 +8,7 @@
 
 When the `log`-driver doesn't cut it, and you can't be bothered looking for your [Mailtrap](https://mailtrap.io) credentials, Nova Mailman is ... your man.
 
-![Screenshot of Larvel Mailman tool](https://jstoone.github.io/nova-mailman/screenshot.png)
+![Screenshot of Nova Mailman](https://jstoone.github.io/nova-mailman/screenshot.png)
 
 ## Installation
 
