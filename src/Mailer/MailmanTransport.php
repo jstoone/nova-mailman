@@ -53,7 +53,7 @@ class MailmanTransport extends Transport
 
         // Create html file
         $this->files->put(
-            $this->getMailPath($message) . '.html',
+            $this->getMailPath($message) . '.blade.php',
             $this->getMailContent($message)
         );
 
