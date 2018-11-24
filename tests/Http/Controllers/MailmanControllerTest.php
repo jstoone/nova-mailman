@@ -19,14 +19,16 @@ class MailmanControllerTest extends TestCase
             $recipient = 'john@example.com'
         );
 
+        $this->withoutExceptionHandling();
         $response = $this->get(route('mail.index'))
             ->assertSuccessful()
             ->assertJson([
                 [
-                    'identifier' => 'unique-mail-identifier',
-                    'recipient'  => $recipient,
-                    'subject'    => $subject,
-                    'sent_at'    => time(),
+                    'id'        => 'unique-mail-identifier',
+                    'recipient' => $recipient,
+                    'subject'   => $subject,
+                    'sent_at'   => time(),
+                    'link'      => route('mail.show', 'unique-mail-identifier'),
                 ],
             ]);
     }

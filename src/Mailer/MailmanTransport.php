@@ -99,10 +99,11 @@ class MailmanTransport extends Transport
     protected function getMailMetadata(Swift_Mime_SimpleMessage $message): string
     {
         return json_encode([
-            'identifier' => MailIdentifier::generate(),
-            'recipient'  => array_first(array_keys($message->getTo())),
-            'subject'    => $message->getSubject(),
-            'sent_at'    => time(),
+            'id'        => $this->identifier,
+            'recipient' => array_first(array_keys($message->getTo())),
+            'subject'   => $message->getSubject(),
+            'sent_at'   => time(),
+            'link'      => route('mail.show', $this->identifier),
         ], JSON_PRETTY_PRINT);
     }
 }

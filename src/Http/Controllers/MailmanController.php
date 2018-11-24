@@ -26,10 +26,11 @@ class MailmanController extends Controller
                 $file = json_decode(file_get_contents($resource));
 
                 return [
-                    'identifier' => $file->identifier,
-                    'recipient'  => $file->recipient,
-                    'subject'    => $file->subject,
-                    'sent_at'    => $file->sent_at,
+                    'id'        => $file->id,
+                    'recipient' => $file->recipient,
+                    'subject'   => $file->subject,
+                    'sent_at'   => $file->sent_at,
+                    'link'      => $file->link,
                 ];
             })->sortBy('sent_at')->values();
     }

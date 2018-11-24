@@ -52,10 +52,11 @@ class MailmanTransportTest extends TestCase
 
         $this->assertEquals(
             [
-                'identifier' => 'unique-identifier',
-                'recipient'  => 'john@example.com',
-                'subject'    => $message->getSubject(),
-                'sent_at'    => time(),
+                'id'        => 'unique-identifier',
+                'subject'   => $message->getSubject(),
+                'recipient' => 'john@example.com',
+                'sent_at'   => time(),
+                'link'      => route('mail.show', 'unique-identifier'),
             ],
             json_decode($file, true)
         );
