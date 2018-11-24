@@ -6,10 +6,9 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/jstoone/nova-mailman.svg?style=flat-square)](https://scrutinizer-ci.com/g/jstoone/nova-mailman)
 [![Total Downloads](https://img.shields.io/packagist/dt/jstoone/nova-mailman.svg?style=flat-square)](https://packagist.org/packages/jstoone/nova-mailman)
 
+When the `log`-driver doesn't cut it, and you can't be bothered looking for your [Mailtrap](https://mailtrap.io) credentials, Nova Mailman is ... your man.
 
-This is where your description should go. Try and limit it to a paragraph or two.
-
-Add a screenshot of the tool here.
+![Screenshot of Larvel Mailman tool](https://jstoone.github.io/nova-mailman/screenshot.png)
 
 ## Installation
 
@@ -42,7 +41,7 @@ Click on the "nova-mailman" menu item in your Nova app to see the tool provided 
 ## Testing
 
 ``` bash
-composer test
+phpunit
 ```
 
 ## Changelog
@@ -57,24 +56,10 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email jstoone@drk.sh instead of using the issue tracker.
 
-## Postcardware
-
-You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
-
 ## Credits
 
 - [Jakob Steinn](https://github.com/jstoone)
-
-## Support us
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
+- [Mohamed Said](https://github.com/themsaid)
 
 ## License
 
