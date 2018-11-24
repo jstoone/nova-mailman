@@ -18,7 +18,7 @@ install:
   - echo "{\"http-basic\":{\"nova.laravel.com\":{\"username\":\"${NOVA_USERNAME}\",\"password\":\"${NOVA_PASSWORD}\"}}}" > auth.json
 
 before_script:
-  - composer install --dev ${COMPOSER_FLAGS} --no-interaction --prefer-source
+  - composer install --no-interaction --prefer-source
   - yarn
 
 script:
