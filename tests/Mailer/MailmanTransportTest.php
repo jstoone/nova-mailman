@@ -3,6 +3,7 @@
 namespace Jstoone\Mailman\Tests\Mailer;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\View\View;
 use Jstoone\Mailman\GenerateMailIdentifier;
 use Jstoone\Mailman\Mailer\MailmanTransport;
 use Jstoone\Mailman\Tests\TestCase;
@@ -26,7 +27,7 @@ class MailmanTransportTest extends TestCase
     }
 
     /** @test */
-    public function it_stores_emails_as_html_files()
+    public function it_stores_emails_as_blade_views()
     {
         $this->app->instance(GenerateMailIdentifier::class, function () {
             return 'unique-identifier';
@@ -34,9 +35,9 @@ class MailmanTransportTest extends TestCase
 
         $message = $this->sendMail('Mail Subject', 'john@example.com');
 
-        $file = app(Filesystem::class)->get('mailman/unique-identifier.blade.php');
-
-        $this->assertEquals('Mail Body', $file);
+        $view = view('nova-mailman-mails::unique-identifier');
+        $this->assertInstanceOf(View::class, $view);
+        $this->assertEquals('Mail Body', $view->render());
     }
 
     /** @test */

@@ -40,7 +40,7 @@ class MailmanControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_html_for_a_given_mail()
+    public function it_can_return_the_view_for_a_given_mail()
     {
         $this->withoutExceptionHandling();
         $this->app->instance(GenerateMailIdentifier::class, function () {
