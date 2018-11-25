@@ -23,7 +23,7 @@ class MailmanController extends Controller
 
         return collect(iterator_to_array($files))
             ->map(function (SplFileInfo $resource) {
-                $file = json_decode(file_get_contents($resource));
+                $file = json_decode(file_get_contents($resource) ?: '');
 
                 return [
                     'id'        => $file->id,

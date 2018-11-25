@@ -104,6 +104,6 @@ class MailmanTransport extends Transport
             'subject'   => $message->getSubject(),
             'sent_at'   => time(),
             'link'      => route('nova-mailman.show', $this->identifier),
-        ], JSON_PRETTY_PRINT);
+        ], JSON_PRETTY_PRINT) ?: '';
     }
 }
