@@ -8,6 +8,6 @@ class GenerateMailIdentifier
 {
     public function __invoke()
     {
-        return Str::uuid();
+        return Str::orderedUuid();
     }
 }
