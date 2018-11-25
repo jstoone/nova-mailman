@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Jstoone\Mailman\Http\Middleware\Authorize;
 use Jstoone\Mailman\Mailer\MailProvider;
-use Laravel\Nova\Events\ServingNova;
-use Laravel\Nova\Nova;
 
 class MailmanServiceProvider extends ServiceProvider
 {
@@ -23,9 +21,6 @@ class MailmanServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             $this->routes();
-        });
-
-        Nova::serving(function (ServingNova $event) {
         });
     }
 
