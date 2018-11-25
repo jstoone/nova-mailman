@@ -1,5 +1,6 @@
 # Conveniently route all emails to a local mailbox.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/74cbf6c736e8487e94b1450ebb2fcbbf)](https://app.codacy.com/app/jstoone/nova-mailman?utm_source=github.com&utm_medium=referral&utm_content=jstoone/nova-mailman&utm_campaign=Badge_Grade_Dashboard)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jstoone/nova-mailman.svg?style=flat-square)](https://packagist.org/packages/jstoone/nova-mailman)
 [![Build Status](https://img.shields.io/travis/jstoone/nova-mailman/master.svg?style=flat-square)](https://travis-ci.org/jstoone/nova-mailman)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f226c77c6734ba3ace718b87281536c)](https://www.codacy.com/app/jstoone/nova-mailman?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jstoone/nova-mailman&amp;utm_campaign=Badge_Grade)
