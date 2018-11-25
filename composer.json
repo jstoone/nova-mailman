@@ -19,9 +19,9 @@
         "laravel/nova": "*"
     },
     "require-dev": {
+        "codacy/coverage": "^1.4",
         "orchestra/testbench": "^3.6",
-        "phpunit/phpunit": "~7.1",
-        "codacy/coverage": "^1.4"
+        "phpunit/phpunit": "~7.1"
     },
     "config": {
         "sort-packages": true
@@ -44,10 +44,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "path",
-            "url": "../nova"
-        },
         {
             "type": "composer",
             "url": "https://nova.laravel.com"

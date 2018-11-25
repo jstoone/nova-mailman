@@ -1,4 +1,4 @@
-# Conveniently route all emails to a local mailbox.
+# Conveniently route all emails to a local mailbox
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jstoone/nova-mailman.svg?style=flat-square)](https://packagist.org/packages/jstoone/nova-mailman)
 [![Build Status](https://img.shields.io/travis/jstoone/nova-mailman/master.svg?style=flat-square)](https://travis-ci.org/jstoone/nova-mailman)
@@ -35,7 +35,7 @@ public function tools()
 
 And as a last step, switch to use Mailman as your mail driver:
 
-```
+```bash
 MAIL_DRIVER=mailman
 ```
 
@@ -45,7 +45,7 @@ Click on the "nova-mailman" menu item in your Nova app to see the tool provided 
 
 ## Testing
 
-``` bash
+```bash
 phpunit
 ```
 
@@ -63,8 +63,8 @@ If you discover any security related issues, please email jstoone@drk.sh instead
 
 ## Credits
 
-- [Jakob Steinn](https://github.com/jstoone)
-- [Mohamed Said](https://github.com/themsaid)
+  - [Jakob Steinn](https://github.com/jstoone) - Maintainer
+  - [Mohamed Said](https://github.com/themsaid) - Maintainer of [Laravel Mail Preview](https://github.com/themsaid/laravel-mail-preview)
 
 ## License
 
