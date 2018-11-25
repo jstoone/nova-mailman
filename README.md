@@ -63,8 +63,8 @@ If you discover any security related issues, please email jstoone@drk.sh instead
 
 ## Credits
 
-  - [Jakob Steinn](https://github.com/jstoone) - Maintainer
-  - [Mohamed Said](https://github.com/themsaid) - Maintainer of [Laravel Mail Preview](https://github.com/themsaid/laravel-mail-preview)
+- [Jakob Steinn](https://github.com/jstoone) - Maintainer
+- [Mohamed Said](https://github.com/themsaid) - Maintainer of [Laravel Mail Preview](https://github.com/themsaid/laravel-mail-preview)
 
 ## License
 

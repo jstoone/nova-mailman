@@ -6,15 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.0.0
 ### Added
-  - Initial release
-  - Initial [project skeleton](https://github.com/spatie/skeleton-nova-tool) by Spatie
-  - Initial inbox layout
-  - Initial mail transporter
-  - Initial mailman `index` and `show` endpoints.
-  - Initials are JSS
-  - Init
-  - In it
-  - </joke>
+- Initial release
+- Initial [project skeleton](https://github.com/spatie/skeleton-nova-tool) by Spatie
+- Initial inbox layout
+- Initial mail transporter
+- Initial mailman `index` and `show` endpoints.
+- Initials are JSS
+- Init
+- In it
+- </joke>
 
 ### Changed
 
