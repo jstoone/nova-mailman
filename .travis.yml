@@ -24,8 +24,8 @@ before_script:
 script:
   - yarn run check-format
   - yarn run lint
-  - phpstan analyze
-  - phpunit --coverage-text --coverage-clover=coverage.clover
+  - php vendor/bin/phpstan analyze
+  - php vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - codacycoverage clover build/coverage/xml
