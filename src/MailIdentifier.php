@@ -1,8 +1,6 @@
 <?php
 
-namespace Jstoone\Mailman\Mailer;
-
-use Jstoone\Mailman\GenerateMailIdentifier;
+namespace Jstoone\Mailman;
 
 class MailIdentifier
 {

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Stored UUID's of mails are now orderd by time
+- Replaced mail driver with event listener
 
 ### Removed
 

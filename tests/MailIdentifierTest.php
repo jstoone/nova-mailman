@@ -1,12 +1,11 @@
 <?php
 
-namespace Jstoone\Mailman\Tests\Mailer;
+namespace Jstoone\Mailman\Tests;
 
 use Jstoone\Mailman\GenerateMailIdentifier;
-use Jstoone\Mailman\Mailer\MailIdentifier;
-use Jstoone\Mailman\Tests\TestCase;
+use Jstoone\Mailman\MailIdentifier;
 
-class MailmanControllerTest extends TestCase
+class MailIdentifierTest extends TestCase
 {
     /** @test */
     public function it_can_generate_a_mail_identifier()
