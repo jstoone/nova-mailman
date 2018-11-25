@@ -33,6 +33,12 @@ public function tools()
 }
 ```
 
+And as a last step, switch to use Mailman as your mail driver:
+
+```
+MAIL_DRIVER=mailman
+```
+
 ## Usage
 
 Click on the "nova-mailman" menu item in your Nova app to see the tool provided by this package.
