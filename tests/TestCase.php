@@ -3,7 +3,6 @@
 namespace Jstoone\Mailman\Tests;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Route;
 use Jstoone\Mailman\Mailer\MailmanTransport;
 use Jstoone\Mailman\MailmanServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -33,7 +32,7 @@ abstract class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp($app)
     {
-        Route::middlewareGroup('nova', []);
+        $app['router']->middlewareGroup('nova', []);
     }
 
     protected function getPackageProviders($app)

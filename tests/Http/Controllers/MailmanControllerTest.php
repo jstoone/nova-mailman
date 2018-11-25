@@ -20,7 +20,7 @@ class MailmanControllerTest extends TestCase
         );
 
         $this->withoutExceptionHandling();
-        $response = $this->get(route('nova-mailman.index'))
+        $this->get(route('nova-mailman.index'))
             ->assertSuccessful()
             ->assertJson([
                 [
@@ -49,10 +49,7 @@ class MailmanControllerTest extends TestCase
             return 'unique-mail-identifier';
         });
 
-        $this->sendMail(
-            $subject = 'Mail Subject',
-            $recipient = 'john@example.com'
-        );
+        $this->sendMail('Mail Subject', 'john@example.com');
 
         $this->get(route('nova-mailman.show', 'unique-mail-identifier'))
             ->assertSuccessful()

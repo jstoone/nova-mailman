@@ -53,13 +53,13 @@ class MailmanTransport extends Transport
 
         // Create html file
         $this->files->put(
-            $this->getMailPath($message) . '.blade.php',
+            $this->getMailPath() . '.blade.php',
             $this->getMailContent($message)
         );
 
         // Create json file
         $this->files->put(
-            $this->getMailPath($message) . '.json',
+            $this->getMailPath() . '.json',
             $this->getMailMetadata($message)
         );
     }
@@ -80,7 +80,7 @@ class MailmanTransport extends Transport
     /**
      * Get the full path to the mailbox, for the given mail message.
      */
-    protected function getMailPath(Swift_Mime_SimpleMessage $message): string
+    protected function getMailPath(): string
     {
         return $this->mailboxPath . '/' . $this->identifier;
     }
