@@ -2,29 +2,13 @@
 
 namespace Jstoone\Mailman\Tests;
 
-use Jstoone\Mailman\Mailer\MailProvider;
+use Illuminate\Mail\Events\MessageSent;
 
 class MailmanServiceProviderTest extends TestCase
 {
     /** @test */
-    public function it_registers_the_mailman_mail_service_provider()
+    public function it_registers_a_mail_sent_listener()
     {
-        $this->assertArrayHasKey(
-            MailProvider::class,
-            $this->app->getLoadedProviders()
-        );
-    }
-
-    /** @test */
-    public function it_only_registers_mail_provider_when_using_mailman_driver()
-    {
-        static::$mailDriver = 'failman';
-
-        $app = $this->createApplication();
-
-        $this->assertArrayNotHasKey(
-            MailProvider::class,
-            $app->getLoadedProviders()
-        );
+        $this->assertCount(1, $this->app['events']->getListeners(MessageSent::class));
     }
 }

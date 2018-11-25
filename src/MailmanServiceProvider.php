@@ -2,11 +2,11 @@
 
 namespace Jstoone\Mailman;
 
+use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Jstoone\Mailman\Http\Middleware\Authorize;
-use Jstoone\Mailman\Mailer\MailProvider;
 
 class MailmanServiceProvider extends ServiceProvider
 {
@@ -18,6 +18,8 @@ class MailmanServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->views();
+
+        $this->app->make('events')->listen(MessageSent::class, DeliverToInbox::class);
 
         $this->app->booted(function () {
             $this->routes();
@@ -45,17 +47,5 @@ class MailmanServiceProvider extends ServiceProvider
         Route::middleware(['nova', Authorize::class])
                 ->prefix('nova-vendor/jstoone/nova-mailman')
                 ->group(__DIR__ . '/../routes/api.php');
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        if (config('mail.driver') === 'mailman') {
-            $this->app->register(MailProvider::class);
-        }
     }
 }

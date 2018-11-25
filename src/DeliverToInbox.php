@@ -1,11 +1,12 @@
 <?php
-namespace Jstoone\Mailman\Mailer;
+
+namespace Jstoone\Mailman;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Mail\Transport\Transport;
-use Swift_Mime_SimpleMessage;
+use Illuminate\Mail\Events\MessageSent;
+use Swift_Message;
 
-class MailmanTransport extends Transport
+class DeliverToInbox
 {
     /**
      * @var Filesystem
@@ -15,53 +16,29 @@ class MailmanTransport extends Transport
     /**
      * @var string
      */
-    protected $mailboxPath;
+    protected $identifier;
 
     /**
      * @var string
      */
-    protected $identifier;
+    protected $mailboxPath;
 
     public function __construct(Filesystem $files)
     {
         $this->files = $files;
+        $this->identifier = MailIdentifier::generate();
         $this->mailboxPath = 'mailman';
     }
 
-    /**
-     * Iterate through registered plugins and execute plugins' methods.
-     *
-     * @param Swift_Mime_SimpleMessage $message
-     *
-     * @return void
-     */
-    protected function beforeSendPerformed(Swift_Mime_SimpleMessage $message)
+    public function handle(MessageSent $event): void
     {
-        parent::beforeSendPerformed($message);
-
-        $this->identifier = MailIdentifier::generate();
-    }
-
-    /**
-     * Store the mail safely in a mailbox, and inform Nova.
-     */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
-    {
-        $this->beforeSendPerformed($message);
-
         $this->createMailbox();
 
         // Create html file
-        $this->files->put(
-            $this->getMailPath() . '.blade.php',
-            $this->getMailContent($message)
-        );
+        $this->storeMailContent($event->message);
 
         // Create json file
-        $this->files->put(
-            $this->getMailPath() . '.json',
-            $this->getMailMetadata($message)
-        );
+        $this->storeMailMetadata($event->message);
     }
 
     /**
@@ -88,15 +65,26 @@ class MailmanTransport extends Transport
     /**
      * Get the content from the given mail message.
      */
-    protected function getMailContent(Swift_Mime_SimpleMessage $message): string
+    protected function storeMailContent(Swift_Message $message): void
     {
-        return $message->getBody();
+        $this->files->put(
+            $this->getMailPath() . '.blade.php',
+            $message->getBody()
+        );
     }
 
     /**
      * Get the metadata for the given mail message.
      */
-    protected function getMailMetadata(Swift_Mime_SimpleMessage $message): string
+    protected function storeMailMetadata(Swift_Message $message): void
+    {
+        $this->files->put(
+            $this->getMailPath() . '.json',
+            $this->getMetadata($message)
+        );
+    }
+
+    protected function getMetadata(Swift_Message $message): string
     {
         return json_encode([
             'id'        => $this->identifier,
