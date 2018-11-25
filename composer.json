@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "codacy/coverage": "^1.4",
+        "nunomaduro/larastan": "^0.3.10",
         "orchestra/testbench": "^3.6",
         "phpunit/phpunit": "~7.1"
     },
