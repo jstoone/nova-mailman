@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('mail', \Jstoone\Mailman\Http\Controllers\MailmanController::class)
-    ->only(['index', 'show'])
+    ->only(['index', 'show', 'destroy'])
     ->names([
-        'index' => 'nova-mailman.index',
-        'show'  => 'nova-mailman.show',
+        'index'    => 'nova-mailman.index',
+        'show'     => 'nova-mailman.show',
+        'destroy'  => 'nova-mailman.destroy',
     ]);
