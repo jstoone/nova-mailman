@@ -39,4 +39,12 @@ class MailmanController extends Controller
     {
         return view("nova-mailman-mails::$identifier");
     }
+
+    public function destroy(Filesystem $filesystem, string $identifier)
+    {
+        $path = 'mailman/' . $identifier;
+
+        $filesystem->delete($path . '.blade.php');
+        $filesystem->delete($path . '.json');
+    }
 }
