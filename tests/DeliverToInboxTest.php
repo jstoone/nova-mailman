@@ -47,7 +47,7 @@ class DeliverToInboxTest extends TestCase
                 'id'        => 'unique-identifier',
                 'subject'   => 'Mail Subject',
                 'recipient' => 'john@example.com',
-                'sent_at'   => time(),
+                'sent_at'   => (string) now(),
                 'link'      => route('nova-mailman.show', 'unique-identifier'),
             ],
             json_decode($file, true)

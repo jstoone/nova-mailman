@@ -90,7 +90,7 @@ class DeliverToInbox
             'id'        => $this->identifier,
             'recipient' => array_first(array_keys($message->getTo())),
             'subject'   => $message->getSubject(),
-            'sent_at'   => time(),
+            'sent_at'   => (string) now(),
             'link'      => route('nova-mailman.show', $this->identifier),
         ], JSON_PRETTY_PRINT) ?: '';
     }
