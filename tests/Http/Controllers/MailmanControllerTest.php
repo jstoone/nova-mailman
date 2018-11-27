@@ -29,7 +29,7 @@ class MailmanControllerTest extends TestCase
                     'id'        => 'unique-mail-identifier',
                     'recipient' => $recipient,
                     'subject'   => $subject,
-                    'sent_at'   => time(),
+                    'sent_at'   => (string) now(),
                     'link'      => route('nova-mailman.show', 'unique-mail-identifier'),
                 ],
             ]);
