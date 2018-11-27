@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- New destroy route to delete mails
+- Ability to remove mails from the tool
+
+### Changed
+- New sidebar icon
+- Split vue tool in to individual components
+- Timestamps are now displayed in [YYY-MM-DD HH:MM:SS] format
+
+### Removed
+
 ## [1.1.0]
 ### Added
 
