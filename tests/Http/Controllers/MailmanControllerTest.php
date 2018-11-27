@@ -2,6 +2,7 @@
 
 namespace Jstoone\Mailman\Tests\Http\Controllers;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Jstoone\Mailman\GenerateMailIdentifier;
@@ -21,7 +22,7 @@ class MailmanControllerTest extends TestCase
             $recipient = 'john@example.com'
         );
 
-        $this->withoutExceptionHandling();
+        Carbon::setTestNow(now());
         $this->get(route('nova-mailman.index'))
             ->assertSuccessful()
             ->assertJson([

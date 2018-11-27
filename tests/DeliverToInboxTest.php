@@ -3,6 +3,7 @@
 namespace Jstoone\Mailman\Tests;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Jstoone\Mailman\GenerateMailIdentifier;
 
@@ -39,6 +40,7 @@ class DeliverToInboxTest extends TestCase
             return 'unique-identifier';
         });
 
+        Carbon::setTestNow(now());
         $this->sendMail('Mail Subject', 'john@example.com');
         $file = app(Filesystem::class)->get('mailman/unique-identifier.json');
 
