@@ -5,6 +5,7 @@ namespace Jstoone\Mailman;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Mail\Events\MessageSent;
 use Swift_Message;
+use Symfony\Component\Yaml\Yaml;
 
 class DeliverToInbox
 {
@@ -27,31 +28,13 @@ class DeliverToInbox
     {
         $this->files = $files;
         $this->identifier = MailIdentifier::generate();
-        $this->mailboxPath = 'mailman';
+        $this->mailboxPath = '';
     }
 
     public function handle(MessageSent $event): void
     {
-        $this->createMailbox();
-
         // Create html file
         $this->storeMailContent($event->message);
-
-        // Create json file
-        $this->storeMailMetadata($event->message);
-    }
-
-    /**
-     * Create the mailbox directory.
-     */
-    protected function createMailbox(): void
-    {
-        if ($this->files->exists($this->mailboxPath)) {
-            return;
-        }
-
-        $this->files->makeDirectory($this->mailboxPath);
-        $this->files->put($this->mailboxPath . '/.gitignore', "*\n!.gitignore");
     }
 
     /**
@@ -67,20 +50,19 @@ class DeliverToInbox
      */
     protected function storeMailContent(Swift_Message $message): void
     {
-        $this->files->put(
-            $this->getMailPath() . '.blade.php',
-            $message->getBody()
-        );
-    }
+        $content = '---' . PHP_EOL;
+        $content .= Yaml::dump([
+            'recipient' => array_first(array_keys($message->getTo())),
+            'subject'   => $message->getSubject(),
+            'sent_at'   => (string) now(),
+            'link'      => route('nova-mailman.show', $this->identifier),
+        ]);
+        $content .= '---' . PHP_EOL;
+        $content .= $message->getBody();
 
-    /**
-     * Get the metadata for the given mail message.
-     */
-    protected function storeMailMetadata(Swift_Message $message): void
-    {
         $this->files->put(
-            $this->getMailPath() . '.json',
-            $this->getMetadata($message)
+            $this->getMailPath() . '.md',
+            $content
         );
     }
 
