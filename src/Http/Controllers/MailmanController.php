@@ -4,47 +4,33 @@ namespace Jstoone\Mailman\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Routing\Controller;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
+use Jstoone\Mailman\MailSheet;
 
 class MailmanController extends Controller
 {
     public function index(Filesystem $filesystem)
     {
-        if (!$filesystem->exists('mailman')) {
-            return [];
-        }
-
-        $files = (new Finder)
-            ->in($filesystem->path('mailman'))
-            ->name('*.json')
-            ->ignoreDotFiles(true)
-            ->files();
-
-        return collect(iterator_to_array($files))
-            ->map(function (SplFileInfo $resource) {
-                $file = json_decode(file_get_contents($resource) ?: '');
-
+        return sheets()
+            ->all()
+            ->reverse()
+            ->map(function (MailSheet $sheet) {
                 return [
-                    'id'        => $file->id,
-                    'recipient' => $file->recipient,
-                    'subject'   => $file->subject,
-                    'sent_at'   => $file->sent_at,
-                    'link'      => $file->link,
+                    'id'        => $sheet->slug,
+                    'recipient' => $sheet->recipient,
+                    'subject'   => $sheet->subject,
+                    'sent_at'   => $sheet->sent_at,
+                    'link'      => $sheet->link,
                 ];
-            })->sortBy('sent_at')->values();
+            });
     }
 
-    public function show(string $identifier)
+    public function show(MailSheet $mail)
     {
-        return view("nova-mailman-mails::$identifier");
+        return $mail->contents;
     }
 
     public function destroy(Filesystem $filesystem, string $identifier)
     {
-        $path = 'mailman/' . $identifier;
-
-        $filesystem->delete($path . '.blade.php');
-        $filesystem->delete($path . '.json');
+        $filesystem->delete('mailman/' . $identifier . '.md');
     }
 }

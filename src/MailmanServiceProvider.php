@@ -12,40 +12,71 @@ class MailmanServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->views();
-
-        $this->app->make('events')->listen(MessageSent::class, DeliverToInbox::class);
+        $this->configurations();
 
         $this->app->booted(function () {
             $this->routes();
+            $this->events();
         });
     }
 
-    protected function views()
+    /**
+     * Register bindings in the container.
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/mailman.php',
+            'mailman'
+        );
+
+        config()->set('sheets.collections', [
+            'mailman' => [
+                'disk'        => config('mailman.disk'),
+                'sheet_class' => MailSheet::class,
+            ],
+        ]);
+    }
+
+    protected function views(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-mailman');
 
         $this->loadViewsFrom(Storage::path('mailman'), 'nova-mailman-mails');
     }
 
-    /**
-     * Register the tool's routes.
-     *
-     * @return void
-     */
-    protected function routes()
+    protected function configurations(): void
+    {
+        if (!$this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__ . '/../config/mailman.php' => config_path('mailman.php'),
+        ], 'config');
+    }
+
+    protected function routes(): void
     {
         if ($this->app->routesAreCached()) {
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
+        Route::bind('mail', function ($value) {
+            return sheets()->get($value) ?? abort(404);
+        });
+
+        Route::middleware(['nova', 'bindings',  Authorize::class])
                 ->prefix('nova-vendor/jstoone/nova-mailman')
                 ->group(__DIR__ . '/../routes/api.php');
+    }
+
+    protected function events(): void
+    {
+        $this->app->make('events')->listen(MessageSent::class, DeliverToInbox::class);
     }
 }

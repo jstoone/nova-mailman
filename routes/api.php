@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Jstoone\Mailman\Http\Controllers\MailmanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('mail', \Jstoone\Mailman\Http\Controllers\MailmanController::class)
+Route::apiResource('mail', MailmanController::class)
     ->only(['index', 'show', 'destroy'])
     ->names([
         'index'    => 'nova-mailman.index',

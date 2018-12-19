@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel/nova": "*"
+        "laravel/nova": "*",
+        "spatie/sheets": "^1.2"
     },
     "require-dev": {
         "codacy/coverage": "^1.4",

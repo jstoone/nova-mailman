@@ -2,16 +2,20 @@
 
 namespace Jstoone\Mailman\Tests;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Mail;
 use Jstoone\Mailman\MailmanServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\Sheets\SheetsServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
     public function tearDown()
     {
-        app(Filesystem::class)->deleteDirectory('mailman');
+        app(Filesystem::class)->deleteDirectory(
+            __DIR__ . '/temp/mailman',
+            false
+        );
 
         parent::tearDown();
     }
@@ -24,13 +28,14 @@ abstract class TestCase extends Orchestra
 
         $app['config']->set('filesystems.disks.local', [
             'driver' => 'local',
-            'root'   => __DIR__ . '/temp',
+            'root'   => __DIR__ . '/temp/mailman',
         ]);
     }
 
     protected function getPackageProviders($app)
     {
         return [
+            SheetsServiceProvider::class,
             MailmanServiceProvider::class,
         ];
     }
