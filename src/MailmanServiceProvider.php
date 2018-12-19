@@ -38,6 +38,7 @@ class MailmanServiceProvider extends ServiceProvider
             'mailman' => [
                 'disk'        => config('mailman.disk'),
                 'sheet_class' => MailSheet::class,
+                'content_parser' => MailSheetParser::class,
             ],
         ]);
     }

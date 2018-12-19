@@ -4,6 +4,7 @@ namespace Jstoone\Mailman\Tests;
 
 use Illuminate\Mail\Events\MessageSent;
 use Jstoone\Mailman\MailSheet;
+use Jstoone\Mailman\MailSheetParser;
 
 class MailmanServiceProviderTest extends TestCase
 {
@@ -12,8 +13,9 @@ class MailmanServiceProviderTest extends TestCase
     {
         $expected = [
             'mailman' => [
-                'disk'        => config('mailman.disk'),
-                'sheet_class' => MailSheet::class,
+                'disk'           => config('mailman.disk'),
+                'sheet_class'    => MailSheet::class,
+                'content_parser' => MailSheetParser::class,
             ],
         ];
 

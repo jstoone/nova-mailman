@@ -54,7 +54,7 @@ class MailmanControllerTest extends TestCase
 
         $this->get(route('nova-mailman.show', 'unique-mail-identifier'))
             ->assertSuccessful()
-            ->assertSee('<p>Mail Body</p>');
+            ->assertSee('Mail Body');
     }
 
     /** @test */

@@ -25,7 +25,7 @@ class DeliverToInboxTest extends TestCase
                 'recipient'   => 'john@example.com',
                 'sent_at'     => now(),
                 'link'        => route('nova-mailman.show', 'unique-identifier'),
-                'contents'    => "<p>Mail Body</p>\n",
+                'contents'    => "Mail Body",
             ],
             $sheet->toArray()
         );
